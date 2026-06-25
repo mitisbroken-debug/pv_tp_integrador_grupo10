@@ -78,4 +78,7 @@ export const ListaClientes = () => {
             </Table>
           </Card>
         )}
-      </Container
+      </Container>
+    </div>
+  );
+};
