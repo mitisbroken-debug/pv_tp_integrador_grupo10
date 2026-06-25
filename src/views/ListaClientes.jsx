@@ -1,188 +1,90 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Form, Spinner, Alert, Button, Card, InputGroup, Modal } from 'react-bootstrap';
+import { Container, Table, Spinner, Button, Card, Row, Col, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 export const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(false);
   const [busqueda, setBusqueda] = useState('');
-  
-  const [mostrarModal, setMostrarModal] = useState(false);
-  const [datosForm, setDatosForm] = useState({ firstname: '', lastname: '', email: '', username: '', password: '' });
-  const [estadoAlta, setEstadoAlta] = useState({ tipo: null, mensaje: '' });
-  const [enviando, setEnviando] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    const obtenerClientes = async () => {
-      try {
-        setCargando(true);
-        const respuesta = await fetch('https://fakestoreapi.com/users');
-        if (!respuesta.ok) throw new Error('Error de red');
-        const datos = await respuesta.json();
-        setClientes(datos);
-        setError(false);
-      } catch (err) {
-        setError(true);
-      } finally {
-        setCargando(false);
-      }
-    };
-    obtenerClientes();
+    fetch('https://fakestoreapi.com/users')
+      .then(res => res.json())
+      .then(data => { setClientes(data); setCargando(false); });
   }, []);
 
-  const handleAltaSubmit = async (e) => {
-    e.preventDefault();
-    setEnviando(true);
-    setEstadoAlta({ tipo: null, mensaje: '' });
-
-    try {
-      const respuesta = await fetch('https://fakestoreapi.com/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: datosForm.email,
-          username: datosForm.username,
-          password: datosForm.password,
-          name: { firstname: datosForm.firstname, lastname: datosForm.lastname },
-          address: { city: 'N/A', street: 'N/A', number: 0, zipcode: 'N/A', geolocation: { lat: '0', long: '0' } },
-          phone: 'N/A'
-        })
-      });
-
-      if (!respuesta.ok) throw new Error('Error en POST');
-      const datos = await respuesta.json();
-      
-      setEstadoAlta({ tipo: 'success', mensaje: `¡Éxito! Cliente creado con el ID: ${datos.id}` });
-      setTimeout(() => {
-        setMostrarModal(false);
-        setEstadoAlta({ tipo: null, mensaje: '' });
-        setDatosForm({ firstname: '', lastname: '', email: '', username: '', password: '' });
-      }, 3000);
-
-    } catch (error) {
-      setEstadoAlta({ tipo: 'danger', mensaje: 'Error al registrar el cliente.' });
-    } finally {
-      setEnviando(false);
-    }
-  };
-
-  const clientesFiltrados = clientes.filter(cliente => {
-    const termino = busqueda.toLowerCase();
-    const apellido = cliente.name.lastname.toLowerCase();
-    const ciudad = cliente.address.city.toLowerCase();
-    return apellido.includes(termino) || ciudad.includes(termino);
-  });
+  const clientesFiltrados = clientes.filter(c => 
+    c.name.firstname.toLowerCase().includes(busqueda.toLowerCase()) ||
+    c.name.lastname.toLowerCase().includes(busqueda.toLowerCase()) ||
+    c.email.toLowerCase().includes(busqueda.toLowerCase()) ||
+    c.address.city.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   return (
-    <Container fluid className="py-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold mb-0">Directorio de Clientes</h2>
-        <Button variant="success" onClick={() => setMostrarModal(true)}>
-          + Nuevo Cliente
-        </Button>
-      </div>
+    <div style={{ minHeight: '100vh', background: '#f8fafc', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
+      <style>{`
+        .modern-card { border-radius: 24px; border: none; background: white; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+        .table-custom { border-collapse: separate; border-spacing: 0 12px; }
+        .tr-row { background: white; transition: all 0.3s ease; }
+        .tr-row:hover { background: #fdfdfd; transform: scale(1.005); }
+        .action-btn { 
+          background: #2d3436; color: white; border-radius: 8px; padding: 6px 18px; 
+          border: none; font-weight: 600; transition: 0.4s ease; 
+        }
+        .action-btn:hover { background: #00b894; transform: translateY(-2px); }
+        .search-input { 
+          border-radius: 12px; padding: 15px 20px; border: 1px solid #e2e8f0; 
+          background: #ffffff; color: #334155; font-size: 1rem;
+        }
+        .avatar { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; object-fit: cover; }
+      `}</style>
 
-      <Card className="shadow-sm border-0 mb-4 p-3 bg-white">
-        <InputGroup>
-          <InputGroup.Text className="bg-light border-end-0">🔍</InputGroup.Text>
-          <Form.Control
-            type="text"
-            placeholder="Filtrar por apellido o ciudad..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="border-start-0 bg-light"
-          />
-        </InputGroup>
-      </Card>
-
-      {cargando && (
-        <div className="text-center my-5 py-5">
-          <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
+      <Container>
+        <div className="mb-5">
+          <h2 className="fw-bolder" style={{ color: '#1e293b' }}>DIRECTORIO CLIENTES</h2>
+          <p className="text-muted">Gestión de usuarios y perfiles</p>
         </div>
-      )}
 
-      {error && !cargando && (
-        <Alert variant="danger" className="shadow-sm text-center">
-          ¡Error de Sincronización! No pudimos conectar con el servidor.
-        </Alert>
-      )}
+        <Form.Control 
+          className="search-input mb-4 shadow-sm" 
+          placeholder="🔍 Buscar por nombre, email o ciudad..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+        />
 
-      {!cargando && !error && (
-        <Card className="shadow-sm border-0 overflow-hidden">
-          <Table responsive hover striped className="mb-0 align-middle">
-            <thead className="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Nombre Completo</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Ciudad</th>
-                <th className="text-center">Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clientesFiltrados.length > 0 ? (
-                clientesFiltrados.map(cliente => (
-                  <tr key={cliente.id}>
-                    <td className="fw-bold text-secondary">#{cliente.id}</td>
-                    <td className="text-capitalize">{cliente.name.firstname} {cliente.name.lastname}</td>
-                    <td>{cliente.email}</td>
-                    <td>{cliente.phone}</td>
-                    <td className="text-capitalize">{cliente.address.city}</td>
-                    <td className="text-center">
-                      <Button variant="outline-primary" size="sm" onClick={() => navigate(`/clientes/${cliente.id}`)}>
-                        Ver Detalles
-                      </Button>
+        {cargando ? (
+          <div className="text-center py-5"><Spinner animation="border" variant="secondary" /></div>
+        ) : (
+          <Card className="modern-card p-3 border-0">
+            <Table className="table-custom" responsive borderless>
+              <thead>
+                <tr style={{ color: '#94a3b8', fontSize: '0.70rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <th className="px-4">Cliente</th>
+                  <th>Contacto</th>
+                  <th>Ubicación</th>
+                  <th className="text-center">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientesFiltrados.map(c => (
+                  <tr key={c.id} className="tr-row">
+                    <td className="px-4 py-3 fw-bold d-flex align-items-center">
+                      <img src={`https://i.pravatar.cc/150?u=${c.id}`} className="avatar" alt="avatar" />
+                      {c.name.firstname} {c.name.lastname}
+                    </td>
+                    <td className="py-3 text-muted">{c.email}</td>
+                    <td className="py-3 text-muted">{c.address.city}</td>
+                    <td className="text-center py-3">
+                      <button className="action-btn" onClick={() => navigate(`/clientes/${c.id}`)}>VER PERFIL</button>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center text-muted py-5">No hay resultados.</td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </Card>
-      )}
-
-      <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Alta de Nuevo Cliente</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {estadoAlta.tipo && <Alert variant={estadoAlta.tipo}>{estadoAlta.mensaje}</Alert>}
-          <Form onSubmit={handleAltaSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" value={datosForm.firstname} onChange={(e) => setDatosForm({...datosForm, firstname: e.target.value})} required />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control type="text" value={datosForm.lastname} onChange={(e) => setDatosForm({...datosForm, lastname: e.target.value})} required />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" value={datosForm.email} onChange={(e) => setDatosForm({...datosForm, email: e.target.value})} required />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Usuario</Form.Label>
-              <Form.Control type="text" value={datosForm.username} onChange={(e) => setDatosForm({...datosForm, username: e.target.value})} required />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" value={datosForm.password} onChange={(e) => setDatosForm({...datosForm, password: e.target.value})} required />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="w-100" disabled={enviando}>
-              {enviando ? 'Enviando...' : 'Guardar Cliente'}
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-
-    </Container>
+                ))}
+              </tbody>
+            </Table>
+          </Card>
+        )}
+      </Container>
+    </div>
   );
 };
