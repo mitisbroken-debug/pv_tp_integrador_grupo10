@@ -1,9 +1,12 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 
 export const AdminContext = createContext();
 
+export const useAdmin = () => {
+  return useContext(AdminContext);
+};
+
 export const AdminProvider = ({ children }) => {
-  
   const [admin, setAdmin] = useState(() => {
     const adminGuardado = localStorage.getItem('sesionAdmin');
     return adminGuardado ? JSON.parse(adminGuardado) : null;
