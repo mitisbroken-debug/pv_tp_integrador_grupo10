@@ -24,31 +24,16 @@ export const ListaClientes = () => {
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
       <style>{`
-        /* Animación suave de 0.3 segundos */
-        .fila-hover { 
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; 
-        }
-        
-        /* Efecto fluido: cambia fondo, levanta la fila y pone sombra sutil */
-        .fila-hover:hover { 
-          background-color: #f1f5f9 !important; 
-          transform: scale(1.01);
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-          z-index: 10;
-        }
-        
+        .fila-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; }
+        .fila-hover:hover { background-color: #f1f5f9 !important; transform: scale(1.01); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); z-index: 10; }
         .fila-hover td { background-color: transparent !important; }
-        
-        .btn-ver { 
-          background: #2d3436; color: white; border-radius: 8px; padding: 6px 18px; 
-          border: none; transition: all 0.3s ease; 
-        }
+        .btn-ver { background: #2d3436; color: white; border-radius: 8px; padding: 6px 18px; border: none; transition: all 0.3s ease; }
         .btn-ver:hover { background-color: #00b894 !important; transform: scale(1.05); }
       `}</style>
 
       <Container className="text-center">
         <div className="mb-4">
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: '700', color: '#1e293b', fontSize: '2.8rem' }}>DIRECTORIO DE CLIENTES</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: '700', color: '#1e293b', fontSize: '2.8rem' }}>DIRECTORIO CLIENTES</h2>
           <p className="text-muted" style={{ fontSize: '1.1rem' }}>Gestión de usuarios y perfiles</p>
         </div>
 
@@ -93,7 +78,4 @@ export const ListaClientes = () => {
             </Table>
           </Card>
         )}
-      </Container>
-    </div>
-  );
-};
+      </Container
