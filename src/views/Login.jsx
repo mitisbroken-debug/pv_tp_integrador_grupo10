@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Container, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { useAdmin } from '../context/AdminContext';
+import '../css/login.css';
 
 export const Login = () => {
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [sector, setSector] = useState('Soporte');
   const navigate = useNavigate();
   const { login } = useAdmin();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || !password.trim()) return;
 
     login({ name: name.trim(), sector });
     navigate('/dashboard', { replace: true });
@@ -19,100 +21,6 @@ export const Login = () => {
 
   return (
     <>
-      <style>
-        {`
-          /* IMAGEN DE FONDO */
-          .bg-image-container {
-            /* REEMPLAZA ESTA URL POR LA RUTA DE TU IMAGEN (ej: url('/assets/fondo.jpg')) */
-            
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-          }
-          
-          /* Capa oscura sobre la imagen para que resalte el cuadro */
-          .bg-overlay {
-            background-color: rgba(0, 0, 0, 0.6);
-            width: 100%;
-            min-height: 100vh;
-          }
-
-          /* EFECTO CRISTAL (Glassmorphism) */
-          .glass-card {
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            color: white;
-          }
-
-          @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-
-          /* Estilos para inputs transparentes */
-          .glass-input {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            color: #fff !important;
-          }
-          
-          .glass-input:focus {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            border-color: #fff !important;
-            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1) !important;
-          }
-
-          /* --- FIX DE SUPERPOSICIÓN --- */
-          /* Oculta el placeholder cuando NO está en foco para que no choque con el label */
-          .glass-input:not(:focus)::placeholder {
-            color: transparent !important;
-          }
-          /* Muestra el placeholder solo cuando haces clic en el input */
-          .glass-input:focus::placeholder {
-            color: rgba(255, 255, 255, 0.5) !important;
-          }
-
-          /* Ajustes para el Floating Label con tema oscuro */
-          .form-floating > label {
-            color: rgba(255, 255, 255, 0.7);
-          }
-          .form-floating > .form-control:focus ~ label,
-          .form-floating > .form-control:not(:placeholder-shown) ~ label,
-          .form-floating > .form-select ~ label {
-            color: #fff;
-            background-color: transparent !important;
-          }
-          .form-floating > .form-control:focus ~ label::after,
-          .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
-          .form-floating > .form-select ~ label::after {
-            background-color: transparent !important;
-          }
-
-          /* Las opciones del select no soportan transparencia en todos los navegadores, le damos fondo oscuro */
-          .glass-select option {
-            background-color: #212529;
-            color: white;
-          }
-
-          .btn-glass {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            transition: all 0.3s ease;
-          }
-          .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            color: white;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-          }
-        `}
-      </style>
-
       <div className="bg-image-container">
         <div className="bg-overlay d-flex align-items-center justify-content-center py-5">
           <Container>
@@ -148,7 +56,22 @@ export const Login = () => {
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          placeholder="Ej. María Gómez"
+                          placeholder=" "
+                          className="glass-input fw-semibold"
+                          required
+                        />
+                      </FloatingLabel>
+
+                      <FloatingLabel
+                        controlId="adminPassword"
+                        label="Contraseña"
+                        className="mb-4"
+                      >
+                        <Form.Control
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder=" "
                           className="glass-input fw-semibold"
                           required
                         />
@@ -164,8 +87,8 @@ export const Login = () => {
                           onChange={(e) => setSector(e.target.value)}
                           className="glass-input glass-select fw-semibold"
                         >
-                          <option value="Soporte">Soporte IT</option>
-                          <option value="Gerencia">Gerencia </option>
+                          <option value="Soporte">Soporte</option>
+                          <option value="Gerencia">Gerencia</option>
                         </Form.Select>
                       </FloatingLabel>
 
@@ -188,4 +111,3 @@ export const Login = () => {
     </>
   );
 };
-

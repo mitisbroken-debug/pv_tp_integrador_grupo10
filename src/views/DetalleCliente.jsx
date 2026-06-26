@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Card, Spinner, Alert } from 'react-bootstrap';
+import '../css/DetalleCliente.css';
 
 export const DetalleCliente = () => {
   const { id } = useParams();
@@ -30,51 +31,58 @@ export const DetalleCliente = () => {
 
   if (loading) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" role="status" />
-      </Container>
+      <div className="detalle-dark-bg d-flex align-items-center justify-content-center">
+        <Spinner animation="border" variant="light" role="status" />
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Container className="py-5">
-        <Alert variant="danger">{error}</Alert>
-      </Container>
+      <div className="detalle-dark-bg">
+        <Container className="py-5">
+          <Alert variant="danger">{error}</Alert>
+        </Container>
+      </div>
     );
   }
 
   if (!client) return null;
 
   return (
-    <Container fluid>
-      <h1 className="mb-4">Ficha del Cliente</h1>
-      <Card className="card-shadow border-0">
-        <Card.Body>
-          <Card.Title>{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
-          <Card.Subtitle className="mb-3 text-muted">Usuario: {client.username}</Card.Subtitle>
-          <Card.Text>
-            <strong>Correo:</strong> {client.email}
-          </Card.Text>
-          <Card.Text>
-            <strong>Teléfono:</strong> {client.phone}
-          </Card.Text>
-          <Card.Text>
-            <strong>Dirección:</strong>
-            <br />
-            {client.address.street} {client.address.number}, {client.address.city}
-            <br />
-            {client.address.zipcode}
-          </Card.Text>
-          <Card.Text>
-            <strong>Credenciales:</strong>
-            <br />
-            Usuario: {client.username}
-            <br />
-            Contraseña: {client.password}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </Container>
+
+    <div className="detalle-dark-bg">
+      <Container fluid>
+        <h1 className="mb-4 text-white">Ficha del Cliente</h1>
+        
+        <Card className="card-shadow border-0 card-dark">
+          <Card.Body>
+            <Card.Title className="fw-bold">{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
+            <Card.Subtitle className="mb-3 text-white-50">Usuario: {client.username}</Card.Subtitle>
+            
+            <Card.Text>
+              <strong>Correo:</strong> {client.email}
+            </Card.Text>
+            <Card.Text>
+              <strong>Teléfono:</strong> {client.phone}
+            </Card.Text>
+            <Card.Text>
+              <strong>Dirección:</strong>
+              <br />
+              {client.address.street} {client.address.number}, {client.address.city}
+              <br />
+              {client.address.zipcode}
+            </Card.Text>
+            <Card.Text>
+              <strong>Credenciales:</strong>
+              <br />
+              Usuario: {client.username}
+              <br />
+              <span className="text-danger">Contraseña: {client.password}</span>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 };
