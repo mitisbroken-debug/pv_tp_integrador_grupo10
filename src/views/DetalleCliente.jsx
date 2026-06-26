@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Card, Spinner, Alert } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Card, Spinner, Alert, Button } from 'react-bootstrap';
 import '../css/DetalleCliente.css';
 
 export const DetalleCliente = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [client, setClient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,6 +43,9 @@ export const DetalleCliente = () => {
       <div className="detalle-dark-bg">
         <Container className="py-5">
           <Alert variant="danger">{error}</Alert>
+          <Button variant="outline-light" className="mt-3" onClick={() => navigate('/clientes')}>
+            Volver
+          </Button>
         </Container>
       </div>
     );
@@ -53,6 +57,9 @@ export const DetalleCliente = () => {
 
     <div className="detalle-dark-bg">
       <Container fluid>
+        <Button variant="outline-light" className="mb-4" onClick={() => navigate('/clientes')}>
+          ← Volver
+        </Button>
         <h1 className="mb-4 text-white">Ficha del Cliente</h1>
         
         <Card className="card-shadow border-0 card-dark">
