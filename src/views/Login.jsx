@@ -6,13 +6,14 @@ import '../css/login.css';
 
 export const Login = () => {
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [sector, setSector] = useState('Soporte');
   const navigate = useNavigate();
   const { login } = useAdmin();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || !password.trim()) return;
 
     login({ name: name.trim(), sector });
     navigate('/dashboard', { replace: true });
@@ -55,7 +56,22 @@ export const Login = () => {
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          placeholder="Usuario"
+                          placeholder=" "
+                          className="glass-input fw-semibold"
+                          required
+                        />
+                      </FloatingLabel>
+
+                      <FloatingLabel
+                        controlId="adminPassword"
+                        label="Contraseña"
+                        className="mb-4"
+                      >
+                        <Form.Control
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder=" "
                           className="glass-input fw-semibold"
                           required
                         />
@@ -72,7 +88,7 @@ export const Login = () => {
                           className="glass-input glass-select fw-semibold"
                         >
                           <option value="Soporte">Soporte</option>
-                          <option value="Gerencia">Gerencia </option>
+                          <option value="Gerencia">Gerencia</option>
                         </Form.Select>
                       </FloatingLabel>
 

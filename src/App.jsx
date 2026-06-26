@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AdminProvider, useAdmin } from './context/AdminContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,18 +14,29 @@ const RutaPrivada = ({ children }) => {
   return children;
 };
 
+function AppContent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+
+  return (
+    <>
+      {!isLoginPage && <Header />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<RutaPrivada><Dashboard /></RutaPrivada>} />
+        <Route path="/clientes" element={<RutaPrivada><ListaClientes /></RutaPrivada>} />
+        <Route path="/clientes/:id" element={<RutaPrivada><DetalleCliente /></RutaPrivada>} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </>
+  );
+}
+
 function App() {
   return (
     <AdminProvider>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<RutaPrivada><Dashboard /></RutaPrivada>} />
-          <Route path="/clientes" element={<RutaPrivada><ListaClientes /></RutaPrivada>} />
-          <Route path="/clientes/:id" element={<RutaPrivada><DetalleCliente /></RutaPrivada>} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+        <AppContent />
       </BrowserRouter>
     </AdminProvider>
   );
