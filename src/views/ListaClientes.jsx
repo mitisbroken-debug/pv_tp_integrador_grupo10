@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Spinner, Card, Form, Alert } from 'react-bootstrap';
+import { Container, Spinner, Card, Form, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import '../css/ListaCliente.css'; // ← IMPORTAMOS EL ARCHIVO ACÁ
+import '../css/ListaCliente.css'; 
 
 export const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -35,7 +35,15 @@ export const ListaClientes = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
+      
+      {/* TRUCO MAESTRO: Forzamos al body de index.css a volverse oscuro usando un tag style temporal */}
+      <style>{`
+        body, html, #root {
+          background-color: #1a2333 !important;
+        }
+      `}</style>
+
       <Container>
         <div className="mb-4 text-center">
           <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>
@@ -62,42 +70,61 @@ export const ListaClientes = () => {
             <p className="mb-0 small">{error}</p>
           </Alert>
         ) : (
-          <Card className="p-3 border-0 shadow-sm" style={{ borderRadius: '20px', background: '#242f41', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <Table responsive borderless variant="dark" className="mb-0 align-middle">
-              <thead>
-                <tr style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase' }}>
-                  <th className="px-4">Cliente</th>
-                  <th>Contacto</th>
-                  <th>Ubicación</th>
-                  <th className="text-center">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientesFiltrados.map(c => (
-                  <tr 
-                    key={c.id} 
-                    className="fila-hover border-bottom border-secondary border-opacity-25"
-                    onClick={() => navigate(`/clientes/${c.id}`)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <td className="px-4 py-3 d-flex align-items-center text-white fw-semibold">
-                      <img 
-                        src={`https://i.pravatar.cc/150?u=${c.id}`} 
-                        style={{ width: '38px', height: '38px', borderRadius: '50%', marginRight: '12px', objectFit: 'cover' }} 
-                        alt="avatar" 
-                      />
-                      <span className="text-capitalize">{c.name?.firstname} {c.name?.lastname}</span>
-                    </td>
-                    <td className="py-3 text-white-50">{c.email}</td>
-                    <td className="py-3 text-white-50 text-capitalize">{c.address?.city}</td>
-                    <td className="text-center py-3">
-                      <button className="btn-ver shadow-sm">VER PERFIL</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Card>
+          /* GRID DE CARDS */
+          <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+            {clientesFiltrados.map(c => (
+              <Col key={c.id}>
+                <Card 
+                  className="h-100 text-white border-0 shadow-lg"
+                  onClick={() => navigate(`/clientes/${c.id}`)}
+                  style={{ 
+                    cursor: 'pointer', 
+                    background: '#242f41', 
+                    borderRadius: '20px',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    border: '1px solid rgba(255,255,255,0.05)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <div className="text-center pt-4">
+                    <Card.Img 
+                      variant="top" 
+                      src={`https://i.pravatar.cc/150?u=${c.id}`} 
+                      style={{ width: '85px', height: '85px', borderRadius: '50%', objectFit: 'cover', border: '3px solid rgba(255,255,255,0.1)' }} 
+                      alt="avatar"
+                    />
+                  </div>
+                  <Card.Body className="text-center d-flex flex-column justify-content-between">
+                    <div>
+                      <Card.Title className="text-capitalize fw-bold mb-1 fs-5">
+                        {c.name?.firstname} {c.name?.lastname}
+                      </Card.Title>
+                      <Card.Text className="text-white-50 small mb-3" style={{ wordBreak: 'break-word' }}>
+                        {c.email}
+                      </Card.Text>
+                    </div>
+                    
+                    <div>
+                      <hr className="border-secondary border-opacity-25 my-2" />
+                      <Card.Text className="text-white-50 small text-capitalize mb-3">
+                        📍 {c.address?.city}
+                      </Card.Text>
+                      <button className="btn-ver w-100 shadow-sm py-2" style={{ borderRadius: '10px' }}>
+                        VER PERFIL
+                      </button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         )}
       </Container>
     </div>
