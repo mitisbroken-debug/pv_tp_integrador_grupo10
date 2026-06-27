@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Card, Form, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { BotonEliminar } from '../components/common/BotonEliminar';
 import '../css/ListaCliente.css'; 
 
 export const ListaClientes = () => {
@@ -27,6 +28,10 @@ export const ListaClientes = () => {
     obtenerClientes();
   }, []);
 
+  const eliminarClienteLocalmente = (id) => {
+    setClientes(clientes.filter(c => c.id !== id));
+  };
+
   const clientesFiltrados = clientes.filter(c => 
     c.name?.firstname?.toLowerCase().includes(busqueda.toLowerCase()) ||
     c.name?.lastname?.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -37,7 +42,6 @@ export const ListaClientes = () => {
   return (
     <div style={{ background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
       
-      {/* TRUCO MAESTRO: Forzamos al body de index.css a volverse oscuro usando un tag style temporal */}
       <style>{`
         body, html, #root {
           background-color: #1a2333 !important;
@@ -70,7 +74,6 @@ export const ListaClientes = () => {
             <p className="mb-0 small">{error}</p>
           </Alert>
         ) : (
-          /* GRID DE CARDS */
           <Row xs={1} sm={2} md={3} lg={4} className="g-4">
             {clientesFiltrados.map(c => (
               <Col key={c.id}>
@@ -116,9 +119,23 @@ export const ListaClientes = () => {
                       <Card.Text className="text-white-50 small text-capitalize mb-3">
                         📍 {c.address?.city}
                       </Card.Text>
-                      <button className="btn-ver w-100 shadow-sm py-2" style={{ borderRadius: '10px' }}>
+                      <button 
+                        className="btn-ver w-100 shadow-sm py-2 mb-2" 
+                        style={{ borderRadius: '10px' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/clientes/${c.id}`);
+                        }}
+                      >
                         VER PERFIL
                       </button>
+
+                      <div className="mt-2">
+                        <BotonEliminar 
+                          idCliente={c.id} 
+                          onEliminar={eliminarClienteLocalmente} 
+                        />
+                      </div>
                     </div>
                   </Card.Body>
                 </Card>
