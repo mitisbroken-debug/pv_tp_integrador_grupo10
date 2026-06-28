@@ -26,24 +26,22 @@ body {
 }
 
 .bg-image-container {
-  background: #4f566b;
+  background: #111622;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100vh; 
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
 }
 
 .bg-overlay {
   background-color: rgba(15, 23, 42, 0.72);
   width: 100%;
-  min-height: 100vh;
+  min-height: 100vh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
 }
 
 .glass-card {

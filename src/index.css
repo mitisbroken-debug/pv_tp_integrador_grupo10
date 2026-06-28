@@ -1,12 +1,12 @@
 :root {
-  --text: #4e5362;
-  --text-h: #1f2937;
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --border: #dbe2ec;
+  --text: #e2e8f0; 
+  --text-h: #ffffff; 
+  --bg: #1a202c; 
+  --surface: #242f41;
+  --border: rgba(255, 255, 255, 0.08);
   --accent: #5c7cfa;
   --accent-soft: rgba(92, 124, 250, 0.12);
-  --shadow: rgba(15, 23, 42, 0.08) 0 12px 24px -12px;
+  --shadow: rgba(0, 0, 0, 0.2) 0 12px 24px -12px;
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -39,10 +39,11 @@ body {
   padding: 1.5rem 1rem 2rem;
 }
 
+
 h1,
 h2 {
   font-family: var(--heading);
-  color: #111827;
+  color: var(--text-h);
 }
 
 h1 {
@@ -56,7 +57,7 @@ h2 {
 }
 
 .text-muted {
-  color: #64748b !important;
+  color: #94a3b8 !important; 
 }
 
 .card-shadow {
@@ -116,5 +117,5 @@ code {
   font-size: 15px;
   line-height: 135%;
   padding: 4px 8px;
-  background: var(--code-bg);
+  background: rgba(255, 255, 255, 0.05);
 }

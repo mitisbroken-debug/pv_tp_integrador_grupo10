@@ -32,7 +32,7 @@ export const DetalleCliente = () => {
 
   if (loading) {
     return (
-      <div className="detalle-dark-bg d-flex align-items-center justify-content-center">
+      <div className="d-flex align-items-center justify-content-center py-5">
         <Spinner animation="border" variant="light" role="status" />
       </div>
     );
@@ -40,56 +40,51 @@ export const DetalleCliente = () => {
 
   if (error) {
     return (
-      <div className="detalle-dark-bg">
-        <Container className="py-5">
-          <Alert variant="danger">{error}</Alert>
-          <Button variant="outline-light" className="mt-3" onClick={() => navigate('/clientes')}>
-            Volver
-          </Button>
-        </Container>
-      </div>
+      <Container>
+        <Alert variant="danger" className="mt-4">{error}</Alert>
+        <Button variant="outline-light" className="mt-3" onClick={() => navigate('/clientes')}>
+          Volver
+        </Button>
+      </Container>
     );
   }
 
   if (!client) return null;
 
   return (
-
-    <div className="detalle-dark-bg">
-      <Container fluid>
-        <Button variant="outline-light" className="mb-4" onClick={() => navigate('/clientes')}>
-          ← Volver
-        </Button>
-        <h1 className="mb-4 text-white">Ficha del Cliente</h1>
-        
-        <Card className="card-shadow border-0 card-dark">
-          <Card.Body>
-            <Card.Title className="fw-bold">{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
-            <Card.Subtitle className="mb-3 text-white-50">Usuario: {client.username}</Card.Subtitle>
-            
-            <Card.Text>
-              <strong>Correo:</strong> {client.email}
-            </Card.Text>
-            <Card.Text>
-              <strong>Teléfono:</strong> {client.phone}
-            </Card.Text>
-            <Card.Text>
-              <strong>Dirección:</strong>
-              <br />
-              {client.address.street} {client.address.number}, {client.address.city}
-              <br />
-              {client.address.zipcode}
-            </Card.Text>
-            <Card.Text>
-              <strong>Credenciales:</strong>
-              <br />
-              Usuario: {client.username}
-              <br />
-              <span className="text-danger">Contraseña: {client.password}</span>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Container>
-    </div>
+    <Container>
+      <Button variant="outline-light" className="mb-4" onClick={() => navigate('/clientes')}>
+        ← Volver
+      </Button>
+      <h1 className="mb-4 text-white">Ficha del Cliente</h1>
+      
+      <Card className="card-shadow border-0 card-dark">
+        <Card.Body className="p-4">
+          <Card.Title className="fw-bold fs-3 mb-1">{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
+          <Card.Subtitle className="mb-4 text-white-50">Usuario: {client.username}</Card.Subtitle>
+          
+          <Card.Text className="mb-3">
+            <strong>Correo:</strong> {client.email}
+          </Card.Text>
+          <Card.Text className="mb-3">
+            <strong>Teléfono:</strong> {client.phone}
+          </Card.Text>
+          <Card.Text className="mb-3">
+            <strong>Dirección:</strong>
+            <br />
+            {client.address.street} {client.address.number}, {client.address.city}
+            <br />
+            {client.address.zipcode}
+          </Card.Text>
+          <Card.Text className="mb-0">
+            <strong>Credenciales:</strong>
+            <br />
+            Usuario: {client.username}
+            <br />
+            <span className="text-danger">Contraseña: {client.password}</span>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };

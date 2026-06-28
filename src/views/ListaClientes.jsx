@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Table, Spinner, Card, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import '../css/ListaCliente.css'; // ← IMPORTAMOS EL ARCHIVO ACÁ
+import '../css/ListaCliente.css';
 
 export const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -35,7 +35,7 @@ export const ListaClientes = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ fontFamily: "'Inter', sans-serif" }}>
       <Container>
         <div className="mb-4 text-center">
           <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>
