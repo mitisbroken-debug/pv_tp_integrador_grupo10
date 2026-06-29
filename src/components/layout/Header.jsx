@@ -1,7 +1,6 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAdmin } from '../../context/AdminContext';
-
 export const Header = () => {
   const { admin, logout } = useAdmin();
   const navigate = useNavigate();
