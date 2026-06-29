@@ -1,13 +1,6 @@
-/* El fondo oscuro de tu Login */
-.detalle-dark-bg {
-  min-height: 100vh;
-  background-color: #1a2333;
-  padding: 40px 20px;
-}
-
-/* La tarjeta adaptada para que no quede blanca */
 .card-dark {
   background-color: #242f41 !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
   color: #ffffff !important;
+  border-radius: 20px !important;
 }

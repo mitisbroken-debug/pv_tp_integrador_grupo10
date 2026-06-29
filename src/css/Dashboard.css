@@ -1,31 +1,135 @@
-/* Contenedor principal con el color de fondo exacto de tu Login */
+
 .dashboard-dark-bg {
-  min-height: 100vh;
-  background-color: #1a2333;
-  padding: 40px 20px;
-  font-family: 'Inter', sans-serif;
+  padding: 48px 12px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #ffffff;
 }
 
-/* Tarjetas oscuras del panel */
-.card-dark {
-  background-color: #242f41 !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 20px !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.dashboard-main-panel {
+  background-color: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.card-dark:hover {
+.dashboard-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+
+.dashboard-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.dashboard-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.sector-badge {
+  background-color: #22c55e;
+  color: #000000;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.metric-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-title-custom {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.card-value-custom {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.metric-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: #22c55e;
+  box-shadow: 0 0 15px var(--glow-color);
 }
 
-/* Historial de actividad */
-.activity-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 1rem;
+.metric-card:hover .card-value-custom {
+  color: #22c55e;
 }
 
-.activity-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+.section-title-custom {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.activity-container-custom {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px;
+}
+
+.activity-row-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  margin-right: 12px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.activity-text-custom {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.activity-time-custom {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.activity-row-custom:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.activity-row-custom:hover .activity-dot {
+  background-color: #22c55e;
+  transform: scale(1.2);
 }

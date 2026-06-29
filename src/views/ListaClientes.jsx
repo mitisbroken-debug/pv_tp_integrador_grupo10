@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Card, Form, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { BotonEliminar } from '../components/common/BotonEliminar';
 import '../css/ListaCliente.css'; 
 
 export const ListaClientes = () => {
@@ -40,14 +39,7 @@ export const ListaClientes = () => {
   );
 
   return (
-    <div style={{ background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
-      
-      <style>{`
-        body, html, #root {
-          background-color: #1a2333 !important;
-        }
-      `}</style>
-
+    <div style={{ minHeight: '100vh', background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
       <Container>
         <div className="mb-4 text-center">
           <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>
