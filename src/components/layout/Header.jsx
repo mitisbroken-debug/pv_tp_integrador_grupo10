@@ -12,7 +12,7 @@ export const Header = () => {
 
   return (
     <header>
-      <Navbar bg="light" variant="light" expand="lg" sticky="top" className="py-3 border-bottom shadow-sm bg-white">
+      <Navbar bg="white" variant="light" expand="lg" sticky="top" className="py-3 bg-white">
         <Container fluid className="px-4">
           <Navbar.Brand as={NavLink} to="/dashboard" className="fw-bold fs-4 text-uppercase tracking-wider text-dark">
             Panel de Control
