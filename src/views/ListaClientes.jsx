@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Spinner, Card, Form, Alert, Row, Col, Modal, Button } from 'react-bootstrap';
+import { Container, Spinner, Card, Form, Alert, Row, Col, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaUserTie, FaMars, FaFemale, FaUserPlus } from 'react-icons/fa';
 import { BotonEliminar } from '../components/common/BotonEliminar';
@@ -11,11 +11,9 @@ export const ListaClientes = () => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [busqueda, setBusqueda] = useState('');
-  
-  // Estados para controlar el modal
   const [showModal, setShowModal] = useState(false);
   const [datos, setDatos] = useState({ nombre: '', apellido: '', email: '', ciudad: '' });
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,15 +35,25 @@ export const ListaClientes = () => {
 
   const handleGuardar = (e) => {
     e.preventDefault();
-    alert("¡Cliente agregado!");
+    const nuevoCliente = {
+      id: Date.now(),
+      name: { firstname: datos.nombre, lastname: datos.apellido },
+      email: datos.email,
+      address: { city: datos.ciudad },
+      gender: 'other'
+    };
+
+    setClientes([nuevoCliente, ...clientes]);
+    alert("¡Cliente agregado con éxito!");
     setShowModal(false);
+    setDatos({ nombre: '', apellido: '', email: '', ciudad: '' });
   };
 
   const eliminarClienteLocalmente = (id) => {
     setClientes(clientes.filter(c => c.id !== id));
   };
 
-  const clientesFiltrados = clientes.filter(c => 
+  const clientesFiltrados = clientes.filter(c =>
     c.name?.firstname?.toLowerCase().includes(busqueda.toLowerCase()) ||
     c.name?.lastname?.toLowerCase().includes(busqueda.toLowerCase()) ||
     c.email?.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -60,38 +68,30 @@ export const ListaClientes = () => {
 
   return (
     <div style={{ background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
-      <style>{`
-        body, html, #root {
-          background-color: #1a2333 !important;
-        }
-      `}</style>
-
+      <style>{`body, html, #root { background-color: #1a2333 !important; }`}</style>
       <Container>
         <div className="mb-4 text-center">
-          <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>
-            DIRECTORIO DE CLIENTES
-          </h2>
+          <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>DIRECTORIO DE CLIENTES</h2>
           <p className="text-white">Búsqueda, auditoría interna y gestión de perfiles</p>
         </div>
 
-        {/* Bloque de búsqueda con botón de agregar */}
         <div className="d-flex justify-content-center align-items-center mb-4" style={{ maxWidth: '650px', margin: '0 auto' }}>
-          <Form.Control 
-            className="shadow-sm custom-search bg-dark text-white border-secondary" 
-            style={{ borderRadius: '12px', padding: '12px 20px', flex: 1 }} 
-            placeholder="Buscar por apellido o ciudad..." 
-            value={busqueda} 
-            onChange={(e) => setBusqueda(e.target.value)} 
+          <Form.Control
+            className="shadow-sm custom-search bg-dark text-white border-secondary"
+            style={{ borderRadius: '12px', padding: '12px 20px', flex: 1 }}
+            placeholder="Buscar por apellido o ciudad..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
           />
-          <button 
+          <button
             onClick={() => setShowModal(true)}
-            style={{ 
+            style={{
               marginLeft: '15px',
-              width: '55px', 
-              height: '55px', 
-              borderRadius: '50%', 
-              backgroundColor: '#28a745', 
-              border: 'none', 
+              width: '55px',
+              height: '55px',
+              borderRadius: '50%',
+              backgroundColor: '#28a745',
+              border: 'none',
               color: 'white',
               fontSize: '24px',
               display: 'flex',
@@ -103,7 +103,6 @@ export const ListaClientes = () => {
           </button>
         </div>
 
-        {/* Modal para el formulario */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title>Registrar Nuevo Cliente</Modal.Title>
@@ -114,9 +113,7 @@ export const ListaClientes = () => {
         </Modal>
 
         {cargando ? (
-          <div className="text-center py-5">
-            <Spinner animation="border" variant="light" />
-          </div>
+          <div className="text-center py-5"><Spinner animation="border" variant="light" /></div>
         ) : error ? (
           <Alert variant="danger" className="mx-auto shadow-sm" style={{ maxWidth: '600px' }}>
             <Alert.Heading className="fs-5 fw-bold">Error de Red</Alert.Heading>
@@ -126,11 +123,11 @@ export const ListaClientes = () => {
           <Row xs={1} sm={2} md={3} lg={4} className="g-4">
             {clientesFiltrados.map(c => (
               <Col key={c.id}>
-                <Card 
+                <Card
                   className="h-100 text-white border-0 shadow-lg cliente-card"
-                  style={{ 
-                    cursor: 'default', 
-                    background: 'linear-gradient(135deg, #2a3548 0%, #1f2a3b 100%)', 
+                  style={{
+                    cursor: 'default',
+                    background: 'linear-gradient(135deg, #2a3548 0%, #1f2a3b 100%)',
                     borderRadius: '22px',
                     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                     border: '1px solid rgba(255,255,255,0.08)',
@@ -179,7 +176,6 @@ export const ListaClientes = () => {
                         >
                           <FaEye />
                         </button>
-
                         <BotonEliminar
                           idCliente={c.id}
                           onEliminar={eliminarClienteLocalmente}
