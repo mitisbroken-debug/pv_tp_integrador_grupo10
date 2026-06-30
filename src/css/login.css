@@ -125,7 +125,6 @@ body {
   padding: 1rem 1.2rem;
   transition: all 0.25s ease;
 }
-
 .btn-glass:hover {
   transform: translateY(-2px);
   background: linear-gradient(135deg, #86efac, #4ade80) !important;
