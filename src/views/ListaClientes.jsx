@@ -60,7 +60,7 @@ export const ListaClientes = () => {
           <h2 className="fw-bold text-white tracking-wide" style={{ fontSize: '2.5rem' }}>
             DIRECTORIO DE CLIENTES
           </h2>
-          <p className="text-muted">Búsqueda, auditoría interna y gestión de perfiles</p>
+          <p className="text-white">Búsqueda, auditoría interna y gestión de perfiles</p>
         </div>
 
         <Form.Control 
