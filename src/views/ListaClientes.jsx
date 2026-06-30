@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Container, Spinner, Card, Form, Alert, Row, Col } from 'react-bootstrap';
+import { Container, Spinner, Card, Form, Alert, Row, Col, Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaUserTie, FaMars, FaFemale } from 'react-icons/fa';
+import { FaEye, FaUserTie, FaMars, FaFemale, FaUserPlus } from 'react-icons/fa';
 import { BotonEliminar } from '../components/common/BotonEliminar';
-import '../css/ListaCliente.css'; 
+import { FormularioCliente } from '../components/common/FormularioCliente';
+import '../css/ListaCliente.css';
 
 export const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [busqueda, setBusqueda] = useState('');
+  
+  // Estados para controlar el modal
+  const [showModal, setShowModal] = useState(false);
+  const [datos, setDatos] = useState({ nombre: '', apellido: '', email: '', ciudad: '' });
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +35,12 @@ export const ListaClientes = () => {
     obtenerClientes();
   }, []);
 
+  const handleGuardar = (e) => {
+    e.preventDefault();
+    alert("¡Cliente agregado!");
+    setShowModal(false);
+  };
+
   const eliminarClienteLocalmente = (id) => {
     setClientes(clientes.filter(c => c.id !== id));
   };
@@ -41,14 +53,13 @@ export const ListaClientes = () => {
   );
 
   const obtenerIconoGenero = (genero) => {
-    if (genero === 'male') return <FaMars />;
-    if (genero === 'female') return <FaFemale />;
-    return <FaUserTie />;
+    if (genero === 'male') return <FaMars size={40} />;
+    if (genero === 'female') return <FaFemale size={40} />;
+    return <FaUserTie size={40} />;
   };
 
   return (
     <div style={{ background: '#1a2333', padding: '40px 20px', fontFamily: "'Inter', sans-serif" }}>
-      
       <style>{`
         body, html, #root {
           background-color: #1a2333 !important;
@@ -63,13 +74,44 @@ export const ListaClientes = () => {
           <p className="text-white">Búsqueda, auditoría interna y gestión de perfiles</p>
         </div>
 
-        <Form.Control 
-          className="shadow-sm mx-auto mb-4 custom-search bg-dark text-white border-secondary" 
-          style={{ maxWidth: '600px', borderRadius: '12px', padding: '12px 20px' }} 
-          placeholder="Buscar por apellido o ciudad..." 
-          value={busqueda} 
-          onChange={(e) => setBusqueda(e.target.value)} 
-        />
+        {/* Bloque de búsqueda con botón de agregar */}
+        <div className="d-flex justify-content-center align-items-center mb-4" style={{ maxWidth: '650px', margin: '0 auto' }}>
+          <Form.Control 
+            className="shadow-sm custom-search bg-dark text-white border-secondary" 
+            style={{ borderRadius: '12px', padding: '12px 20px', flex: 1 }} 
+            placeholder="Buscar por apellido o ciudad..." 
+            value={busqueda} 
+            onChange={(e) => setBusqueda(e.target.value)} 
+          />
+          <button 
+            onClick={() => setShowModal(true)}
+            style={{ 
+              marginLeft: '15px',
+              width: '55px', 
+              height: '55px', 
+              borderRadius: '50%', 
+              backgroundColor: '#28a745', 
+              border: 'none', 
+              color: 'white',
+              fontSize: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <FaUserPlus />
+          </button>
+        </div>
+
+        {/* Modal para el formulario */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Registrar Nuevo Cliente</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormularioCliente handleSubmit={handleGuardar} setDatos={setDatos} datos={datos} />
+          </Modal.Body>
+        </Modal>
 
         {cargando ? (
           <div className="text-center py-5">
@@ -104,7 +146,7 @@ export const ListaClientes = () => {
                   }}
                 >
                   <div className="text-center pt-4">
-                    <div className="avatar-wrapper">
+                    <div className="avatar-wrapper" style={{ padding: '10px' }}>
                       <div className="avatar-icon">
                         {obtenerIconoGenero(c.gender)}
                       </div>
@@ -119,7 +161,6 @@ export const ListaClientes = () => {
                         {c.email}
                       </Card.Text>
                     </div>
-                    
                     <div>
                       <hr className="border-secondary border-opacity-25 my-2" />
                       <div className="cliente-info-box">
@@ -131,7 +172,6 @@ export const ListaClientes = () => {
                         <button
                           className="btn-ver shadow-sm"
                           title="Ver perfil"
-                          aria-label="Ver perfil"
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(`/clientes/${c.id}`);
