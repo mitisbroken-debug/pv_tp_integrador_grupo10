@@ -57,8 +57,8 @@ const Footer = () => {
           <Col xs={12} md={3}>
             <h6 className="text-uppercase fw-bold mb-2 small">Contacto</h6>
             <ul className="list-unstyled d-flex flex-column gap-1 small text-secondary">
-              <li>contacto@tuweb.com</li>
-              <li>+54 11 1234-5678</li>
+              <li>contacto@gmail.com</li>
+              <li>+54 351 123-4567</li>
               <li>Buenos Aires, Argentina</li>
             </ul>
           </Col>

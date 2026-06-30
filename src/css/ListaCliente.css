@@ -1,4 +1,3 @@
-/* Animación y efectos para las filas de la tabla */
 .fila-hover {
   transition: all 0.3s ease !important;
 }
@@ -12,7 +11,7 @@
   background-color: transparent !important;
 }
 
-/* Tarjeta de cliente mejorada */
+
 .cliente-card {
   position: relative;
   overflow: hidden;
@@ -56,7 +55,7 @@
   border: 1px solid rgba(255,255,255,0.06);
 }
 
-/* Botón de acción para ver perfil */
+
 .btn-ver {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #f8fafc;
@@ -99,7 +98,6 @@
   background: linear-gradient(135deg, #f87171, #ef4444) !important;
 }
 
-/* Corrección de color para el placeholder del buscador */
 .custom-search::placeholder {
   color: #64748b !important;
 }
