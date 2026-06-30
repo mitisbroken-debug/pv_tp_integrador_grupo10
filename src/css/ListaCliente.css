@@ -12,23 +12,91 @@
   background-color: transparent !important;
 }
 
+/* Tarjeta de cliente mejorada */
+.cliente-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.cliente-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 45%);
+  pointer-events: none;
+}
+
+.avatar-wrapper {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+.avatar-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2a3548 0%, #1f2a3b 100%);
+  color: #f8fafc;
+  font-size: 2.2rem;
+  border: 3px solid rgba(255,255,255,0.14);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+
+.cliente-info-box {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
 /* Botón de acción para ver perfil */
 .btn-ver {
-  background: #2c3e50;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #f8fafc;
-  border-radius: 8px;
-  padding: 6px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: none;
   transition: all 0.3s ease;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.24);
 }
 
 .btn-ver:hover {
-  background-color: #00b894 !important;
-  border-color: #00b894 !important;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6) !important;
   color: white !important;
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-delete-icon {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.24);
+}
+
+.btn-delete-icon:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(135deg, #f87171, #ef4444) !important;
 }
 
 /* Corrección de color para el placeholder del buscador */
