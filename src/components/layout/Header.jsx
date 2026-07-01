@@ -20,8 +20,9 @@ export const Header = () => {
         className="py-2 position-relative shadow-sm border-bottom border-secondary border-opacity-10" 
         style={{ minHeight: '85px', backgroundColor: '#e2e8f0' }}
       >
+        {/* AGREGUÉ 'd-none d-lg-flex' para que el logo solo se vea en PC y no tape el menú en móvil */}
         <div 
-          className="position-absolute start-50 translate-middle d-flex align-items-center justify-content-center" 
+          className="position-absolute start-50 translate-middle d-none d-lg-flex align-items-center justify-content-center" 
           style={{ 
             top: '50%', 
             zIndex: 1050, 
