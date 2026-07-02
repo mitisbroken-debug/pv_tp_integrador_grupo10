@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Spinner, Alert, Button } from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
 import '../css/DetalleCliente.css';
 
 export const DetalleCliente = () => {
@@ -52,39 +53,54 @@ export const DetalleCliente = () => {
   if (!client) return null;
 
   return (
-    <Container>
-      <Button variant="outline-light" className="mb-4" onClick={() => navigate('/clientes')}>
-        ← Volver
+    <Container className="detalle-cliente-container text-white">
+      <Button
+        variant="outline-light"
+        className="mb-4 detalle-cliente-back-btn"
+        onClick={() => navigate('/clientes')}
+        aria-label="Volver atrás"
+      >
+        <FaArrowLeft />
       </Button>
-      <h1 className="mb-4 text-white">Ficha del Cliente</h1>
+      <h1 className="mb-4 text-center detalle-cliente-title">Ficha del Cliente</h1>
       
-      <Card className="card-shadow border-0 card-dark">
-        <Card.Body className="p-4">
-          <Card.Title className="fw-bold fs-3 mb-1">{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
-          <Card.Subtitle className="mb-4 text-white-50">Usuario: {client.username}</Card.Subtitle>
-          
-          <Card.Text className="mb-3">
-            <strong>Correo:</strong> {client.email}
-          </Card.Text>
-          <Card.Text className="mb-3">
-            <strong>Teléfono:</strong> {client.phone}
-          </Card.Text>
-          <Card.Text className="mb-3">
-            <strong>Dirección:</strong>
-            <br />
-            {client.address.street} {client.address.number}, {client.address.city}
-            <br />
-            {client.address.zipcode}
-          </Card.Text>
-          <Card.Text className="mb-0">
-            <strong>Credenciales:</strong>
-            <br />
-            Usuario: {client.username}
-            <br />
-            <span className="text-danger">Contraseña: {client.password}</span>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      <div className="detalle-cliente-card-wrapper">
+        <Card className="card-shadow border-0 card-dark">
+          <Card.Body className="detalle-cliente-card-body text-center">
+            <div className="detalle-cliente-header">
+              <Card.Title className="fw-bold fs-2 mb-2">{`${client.name.firstname} ${client.name.lastname}`}</Card.Title>
+              <Card.Subtitle className="text-white-50 mb-3">Usuario: {client.username}</Card.Subtitle>
+            </div>
+
+            <div className="detalle-cliente-info">
+              <Card.Text className="detalle-cliente-info-row">
+                <span className="detalle-cliente-info-label">Correo</span>
+                <span className="detalle-cliente-info-value">{client.email}</span>
+              </Card.Text>
+              <Card.Text className="detalle-cliente-info-row">
+                <span className="detalle-cliente-info-label">Teléfono</span>
+                <span className="detalle-cliente-info-value">{client.phone}</span>
+              </Card.Text>
+              <Card.Text className="detalle-cliente-info-row detalle-cliente-info-block">
+                <span className="detalle-cliente-info-label">Dirección</span>
+                <span className="detalle-cliente-info-value">
+                  {client.address.street} {client.address.number}, {client.address.city}
+                  <br />
+                  {client.address.zipcode}
+                </span>
+              </Card.Text>
+              <Card.Text className="detalle-cliente-info-row mb-0 detalle-cliente-info-block">
+                <span className="detalle-cliente-info-label">Credenciales</span>
+                <span className="detalle-cliente-info-value">
+                  Usuario: {client.username}
+                  <br />
+                  <span className="text-danger">Contraseña: {client.password}</span>
+                </span>
+              </Card.Text>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
     </Container>
   );
 };

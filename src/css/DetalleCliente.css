@@ -1,6 +1,113 @@
+.detalle-cliente-container {
+  min-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 1rem;
+}
+
+.detalle-cliente-back-btn {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 18px;
+  font-size: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.detalle-cliente-title {
+  max-width: 720px;
+  width: 100%;
+  font-size: clamp(2.25rem, 2rem + 1vw, 3rem);
+  letter-spacing: -0.04em;
+}
+
+.detalle-cliente-card-wrapper {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  justify-content: center;
+}
+
 .card-dark {
-  background-color: #242f41 !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: linear-gradient(180deg, rgba(31, 41, 55, 0.96), rgba(20, 28, 44, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   color: #ffffff !important;
-  border-radius: 20px !important;
+  border-radius: 28px !important;
+  width: 100%;
+}
+
+.detalle-cliente-card-body {
+  padding: 3rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.detalle-cliente-header {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.5rem;
+}
+
+.detalle-cliente-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detalle-cliente-info-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.detalle-cliente-info-block {
+  text-align: center;
+}
+
+.detalle-cliente-info-label {
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.detalle-cliente-info-value {
+  display: block;
+  color: #f8fafc;
+  font-size: 1rem;
+  max-width: 580px;
+  word-wrap: break-word;
+}
+
+.card-shadow {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+@media (max-width: 768px) {
+  .detalle-cliente-card-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .detalle-cliente-title {
+    font-size: 2.1rem;
+  }
+
+  .detalle-cliente-info-row {
+    gap: 0.25rem;
+  }
 }
