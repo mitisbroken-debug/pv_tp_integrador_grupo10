@@ -20,12 +20,6 @@ export const Login = () => {
 
   return (
     <div className="bg-image-container">
-      <div className="bg-static-pattern" aria-hidden="true"></div>
-      <div className="bg-blobs" aria-hidden="true">
-        <div className="blob blob-1"></div>
-        <div className="blob blob-2"></div>
-      </div>
-      <div className="bg-stripes" aria-hidden="true"></div>
       <Container className="d-flex align-items-center justify-content-center min-vh-100">
         <Row className="w-100 justify-content-center">
           <Col xs={12} sm={8} md={6} lg={4}>
