@@ -84,4 +84,28 @@ export const FormularioCliente = ({ handleSubmit, setDatos, datos }) => {
       <Form.Group className="mb-4">
         <Form.Label className="fw-bold">Provincia</Form.Label>
         <Form.Select 
-          value={datos.ciudad || ''}
+          value={datos.ciudad || ''} 
+          onChange={(e) => setDatos({...datos, ciudad: e.target.value})} 
+          required 
+          style={{ borderRadius: '10px' }}
+        >
+          <option value="">Seleccione...</option>
+          {provincias.map(p => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
+      <Button 
+        variant="success" 
+        type="submit" 
+        className="w-100 py-3 fw-bold shadow text-white border-0" 
+        style={{ borderRadius: '12px', backgroundColor: '#198754' }}
+      >
+        CONFIRMAR REGISTRO
+      </Button>
+    </Form>
+  );
+};
