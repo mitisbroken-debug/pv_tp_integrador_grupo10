@@ -12,6 +12,7 @@ export const ListaClientes = () => {
   const [error, setError] = useState(null);
   const [busqueda, setBusqueda] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [datos, setDatos] = useState({ nombre: '', apellido: '', email: '', ciudad: '' });
 
   const navigate = useNavigate();
@@ -44,8 +45,8 @@ export const ListaClientes = () => {
     };
 
     setClientes([nuevoCliente, ...clientes]);
-    alert("¡Cliente agregado con éxito!");
     setShowModal(false);
+    setShowSuccessModal(true);
     setDatos({ nombre: '', apellido: '', email: '', ciudad: '' });
   };
 
@@ -109,6 +110,33 @@ export const ListaClientes = () => {
           </Modal.Header>
           <Modal.Body>
             <FormularioCliente handleSubmit={handleGuardar} setDatos={setDatos} datos={datos} />
+          </Modal.Body>
+        </Modal>
+
+        <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)} centered>
+          <Modal.Body
+            style={{
+              background: 'linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%)',
+              color: '#243447',
+              padding: '1rem 1.2rem',
+              borderRadius: '14px',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.12)'
+            }}
+          >
+            <div className="text-center">
+              <div className="mb-2" style={{ fontSize: '1.4rem', color: '#28a745' }}>
+                <FaUserPlus />
+              </div>
+              <p className="mb-3 fw-semibold" style={{ fontSize: '0.95rem' }}>
+                Cliente agregado con éxito
+              </p>
+              <button
+                className="btn btn-success btn-sm"
+                onClick={() => setShowSuccessModal(false)}
+              >
+                Aceptar
+              </button>
+            </div>
           </Modal.Body>
         </Modal>
 
